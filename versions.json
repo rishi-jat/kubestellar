@@ -1,5 +1,10 @@
 [
   {
+    "version": "wec-preview",
+    "title": "wec-preview",
+    "aliases": []
+  },
+  {
     "version": "unreleased-development",
     "title": "unreleased-development",
     "aliases": []
