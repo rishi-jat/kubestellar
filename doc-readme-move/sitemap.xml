@@ -265,14 +265,6 @@
          
     </url>
     <url>
-         <loc>https://docs.kubestellar.io/doc-readme-move/direct/example-wecs/</loc>
-         <lastmod>2025-07-08</lastmod>
-         <changefreq>daily</changefreq>
-         <xhtml:link rel="alternate" hreflang="en" href="https://docs.kubestellar.io/doc-readme-move/en/direct/example-wecs/"/>
-         <xhtml:link rel="alternate" hreflang="fr" href="https://docs.kubestellar.io/doc-readme-move/fr/direct/example-wecs/"/>
-         
-    </url>
-    <url>
          <loc>https://docs.kubestellar.io/doc-readme-move/direct/galaxy-intro/</loc>
          <lastmod>2025-07-08</lastmod>
          <changefreq>daily</changefreq>
@@ -366,6 +358,14 @@
          <changefreq>daily</changefreq>
          <xhtml:link rel="alternate" hreflang="en" href="https://docs.kubestellar.io/doc-readme-move/en/direct/kubeflex-intro/"/>
          <xhtml:link rel="alternate" hreflang="fr" href="https://docs.kubestellar.io/doc-readme-move/fr/direct/kubeflex-intro/"/>
+         
+    </url>
+    <url>
+         <loc>https://docs.kubestellar.io/doc-readme-move/direct/observability/</loc>
+         <lastmod>2025-07-08</lastmod>
+         <changefreq>daily</changefreq>
+         <xhtml:link rel="alternate" hreflang="en" href="https://docs.kubestellar.io/doc-readme-move/en/direct/observability/"/>
+         <xhtml:link rel="alternate" hreflang="fr" href="https://docs.kubestellar.io/doc-readme-move/fr/direct/observability/"/>
          
     </url>
     <url>
