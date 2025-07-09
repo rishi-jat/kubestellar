@@ -934,7 +934,7 @@
           <li class="md-nav__item">
   <a href="#run-the-script" class="md-nav__link">
     <span class="md-ellipsis">
-      Run the script!
+      Run the script
     </span>
   </a>
   
@@ -1294,7 +1294,7 @@
           <li class="md-nav__item">
   <a href="#run-the-script" class="md-nav__link">
     <span class="md-ellipsis">
-      Run the script!
+      Run the script
     </span>
   </a>
   
@@ -3745,7 +3745,7 @@
           <li class="md-nav__item">
   <a href="#run-the-script" class="md-nav__link">
     <span class="md-ellipsis">
-      Run the script!
+      Run the script
     </span>
   </a>
   
@@ -3924,24 +3924,26 @@
 <p>For some users on WSL, use of the setup procedure on this page and/or the demo environment creation script may require running as the user <code>root</code> in Linux. There is a <a href="knownissue-wsl-ghcr-helm.md">known issue about this</a>.</p>
 <h3 id="important-shell-variables-for-example-scenarios">Important: Shell Variables for Example Scenarios<a class="headerlink" href="#important-shell-variables-for-example-scenarios" title="Permanent link">#</a></h3>
 <p>After completing the setup, you will need to define several shell variables to run the example scenarios. The meanings of these variables are defined <a href="../example-scenarios/#assumptions-and-variables">at the start of the example scenarios document</a>. What is shown later in this document are the specific values that are correct for the setup procedure described in this guide.</p>
-<p>The key variables you'll need are:
-- <code>host_context</code>, <code>its_cp</code>, <code>its_context</code> - for accessing the hosting cluster and ITS
-- <code>wds_cp</code>, <code>wds_context</code> - for accessing the WDS
-- <code>wec1_name</code>, <code>wec2_name</code>, <code>wec1_context</code>, <code>wec2_context</code> - for accessing the workload execution clusters
-- <code>label_query_both</code>, <code>label_query_one</code> - for cluster selection in scenarios</p>
+<p>The key variables you'll need are:</p>
+<ul>
+<li><code>host_context</code>, <code>its_cp</code>, <code>its_context</code> - for accessing the hosting cluster and ITS</li>
+<li><code>wds_cp</code>, <code>wds_context</code> - for accessing the WDS</li>
+<li><code>wec1_name</code>, <code>wec2_name</code>, <code>wec1_context</code>, <code>wec2_context</code> - for accessing the workload execution clusters</li>
+<li><code>label_query_both</code>, <code>label_query_one</code> - for cluster selection in scenarios</li>
+</ul>
 <h2 id="quick-start-using-the-automated-script">Quick Start Using the Automated Script<a class="headerlink" href="#quick-start-using-the-automated-script" title="Permanent link">#</a></h2>
 <p>If you want to quickly setup a basic environment, you can use our automated installation script.</p>
 <h3 id="install-software-prerequisites">Install software prerequisites<a class="headerlink" href="#install-software-prerequisites" title="Permanent link">#</a></h3>
 <p>Be sure to <a href="../pre-reqs/">install the software prerequisites</a> <em>before</em> running the script!</p>
 <p>The script will check for the pre-reqs and exit if they are not present.</p>
-<h3 id="run-the-script">Run the script!<a class="headerlink" href="#run-the-script" title="Permanent link">#</a></h3>
+<h3 id="run-the-script">Run the script<a class="headerlink" href="#run-the-script" title="Permanent link">#</a></h3>
 <p>The script can install KubeStellar's demonstration environment on top of kind or k3d</p>
-<p>For use with kind
+<p>For use with kind</p>
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>bash<span class="w"> </span>&lt;<span class="o">(</span>curl<span class="w"> </span>-s<span class="w"> </span>https://raw.githubusercontent.com/kubestellar/kubestellar/refs/tags/v0.28.0/scripts/create-kubestellar-demo-env.sh<span class="o">)</span><span class="w"> </span>--platform<span class="w"> </span>kind
-</code></pre></div></p>
-<p>For use with k3d
+</code></pre></div>
+<p>For use with k3d</p>
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>bash<span class="w"> </span>&lt;<span class="o">(</span>curl<span class="w"> </span>-s<span class="w"> </span>https://raw.githubusercontent.com/kubestellar/kubestellar/refs/tags/v0.28.0/scripts/create-kubestellar-demo-env.sh<span class="o">)</span><span class="w"> </span>--platform<span class="w"> </span>k3d
-</code></pre></div></p>
+</code></pre></div>
 <p>If successful, the script will output the variable definitions that you would use when proceeding to the example scenarios. After successfully running the script, proceed to the <a href="#exercise-kubestellar">Exercise KubeStellar</a> section below.</p>
 <p><em>Note: the script does the same things as described in the <a href="#step-by-step-setup">Step by Step Setup</a> but with a little more concurrency, so it can complete a bit faster. While this is great for getting started quickly with a demo system, you may want to follow the manual setup below to better understand the components and how to create a <a href="#next-steps">configuration that meets your needs</a>.</em></p>
 <hr />
