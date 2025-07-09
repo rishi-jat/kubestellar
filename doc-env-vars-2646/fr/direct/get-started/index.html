@@ -3923,7 +3923,7 @@
 <h3 id="note-for-windows-users">Note for Windows users<a class="headerlink" href="#note-for-windows-users" title="Permanent link">#</a></h3>
 <p>For some users on WSL, use of the setup procedure on this page and/or the demo environment creation script may require running as the user <code>root</code> in Linux. There is a <a href="knownissue-wsl-ghcr-helm.md">known issue about this</a>.</p>
 <h3 id="important-shell-variables-for-example-scenarios">Important: Shell Variables for Example Scenarios<a class="headerlink" href="#important-shell-variables-for-example-scenarios" title="Permanent link">#</a></h3>
-<p>After completing the setup, you will need to define several shell variables to run the example scenarios. These variables are defined in the <a href="#variables-for-running-the-example-scenarios">Variables for running the example scenarios</a> section at the end of this guide. You can reference that section whenever you need to set these variables.</p>
+<p>After completing the setup, you will need to define several shell variables to run the example scenarios. The meanings of these variables are defined <a href="../example-scenarios/#assumptions-and-variables">at the start of the example scenarios document</a>. What is shown later in this document are the specific values that are correct for the setup procedure described in this guide.</p>
 <p>The key variables you'll need are:
 - <code>host_context</code>, <code>its_cp</code>, <code>its_context</code> - for accessing the hosting cluster and ITS
 - <code>wds_cp</code>, <code>wds_context</code> - for accessing the WDS
@@ -3943,6 +3943,7 @@
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>bash<span class="w"> </span>&lt;<span class="o">(</span>curl<span class="w"> </span>-s<span class="w"> </span>https://raw.githubusercontent.com/kubestellar/kubestellar/refs/tags/v0.28.0/scripts/create-kubestellar-demo-env.sh<span class="o">)</span><span class="w"> </span>--platform<span class="w"> </span>k3d
 </code></pre></div></p>
 <p>If successful, the script will output the variable definitions that you would use when proceeding to the example scenarios. After successfully running the script, proceed to the <a href="#exercise-kubestellar">Exercise KubeStellar</a> section below.</p>
+<p><em>Note: the script does the same things as described in the <a href="#step-by-step-setup">Step by Step Setup</a> but with a little more concurrency, so it can complete a bit faster. While this is great for getting started quickly with a demo system, you may want to follow the manual setup below to better understand the components and how to create a <a href="#next-steps">configuration that meets your needs</a>.</em></p>
 <hr />
 <h2 id="step-by-step-setup">Step by Step Setup<a class="headerlink" href="#step-by-step-setup" title="Permanent link">#</a></h2>
 <p>This walks you through the steps to produce the same configuration as does the script above, suitable for study but not production usage. For general setup information, see <a href="../user-guide-intro/#the-full-story">the full story</a>.</p>
@@ -4043,7 +4044,7 @@ Note that the CSRs condition is supposed to be <code>Pending</code> until you ap
 </li>
 </ol>
 <h3 id="variables-for-running-the-example-scenarios">Variables for running the example scenarios<a class="headerlink" href="#variables-for-running-the-example-scenarios" title="Permanent link">#</a></h3>
-<p><strong>Important</strong>: Before moving on to try exercising KubeStellar, you will need the following shell variable settings to inform the scenario commands about the configuration. These variables are referenced in the <a href="#important-shell-variables-for-example-scenarios">Important: Shell Variables for Example Scenarios</a> section at the beginning of this guide.</p>
+<p><strong>Important</strong>: Before moving on to try exercising KubeStellar, you will need the following shell variable settings to inform the scenario commands about the configuration.</p>
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nv">host_context</span><span class="o">=</span>kind-kubeflex
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nv">its_cp</span><span class="o">=</span>its1
 <a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="nv">its_context</span><span class="o">=</span>its1
@@ -4056,7 +4057,7 @@ Note that the CSRs condition is supposed to be <code>Pending</code> until you ap
 <a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="nv">label_query_both</span><span class="o">=</span>location-group<span class="o">=</span>edge
 <a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="nv">label_query_one</span><span class="o">=</span><span class="nv">name</span><span class="o">=</span>cluster1
 </code></pre></div>
-<p><strong>Note</strong>: These variable values are specific to the setup described in this guide. If you followed a different setup procedure, you may need to adjust these values accordingly.</p>
+<p><strong>Note</strong>: These variable values are specific to the setup described in this guide. If you followed a different setup procedure, you will need to adjust these values accordingly.</p>
 <h2 id="exercise-kubestellar">Exercise KubeStellar<a class="headerlink" href="#exercise-kubestellar" title="Permanent link">#</a></h2>
 <p>Now that your system is running, you can try some example scenarios</p>
 <ol>
