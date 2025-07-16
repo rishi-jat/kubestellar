@@ -2548,7 +2548,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../contribution-guidelines/operations/document-management.md#testing-website-prs" class="md-nav__link">
+      <a href="../../contribution-guidelines/operations/testing-doc-prs/" class="md-nav__link">
         
   
   
@@ -3511,7 +3511,7 @@
 <td>HTTPS</td>
 <td>8443</td>
 <td>/metrics</td>
-<td>Kubernetes client authentication required even for Pod access</td>
+<td>Kubernetes client authentication and authorization required even for Pod access</td>
 <td>Access via Pod port 8443; HTTPS and authentication are always required. Default port, configurable via Helm values.</td>
 </tr>
 <tr>
@@ -3539,7 +3539,7 @@
 <td>Default port, configurable via Helm values.</td>
 </tr>
 <tr>
-<td>status-agent-controller</td>
+<td>status-addon-agent</td>
 <td>HTTP</td>
 <td>8080</td>
 <td>/metrics</td>
@@ -3548,7 +3548,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> The listed ports are defaults. Currently, only the <code>ks-transport-controller</code> and <code>status-agent-controller</code> ports are configurable via Helm values (see issue #2158). When using the Service for <code>kubestellar-controller-manager</code>, protocol is HTTPS and Kubernetes client authentication is required. Direct pod access may use HTTP.</p>
+<p><strong>Note:</strong> The listed ports are defaults. Currently, only the <code>ks-transport-controller</code> and <code>status-addon-agent</code> ports are configurable via Helm values (see <a href="https://github.com/kubestellar/kubestellar/issues/2158">issue #2158</a>). When using the Service for <code>kubestellar-controller-manager</code>, protocol is HTTPS and Kubernetes client authentication is required. Direct pod access may use HTTP.</p>
 <h2 id="debugprofiling-endpoints">Debug/Profiling Endpoints<a class="headerlink" href="#debugprofiling-endpoints" title="Permanent link">#</a></h2>
 <p>Some KubeStellar components expose Go's built-in pprof debug endpoints for profiling and troubleshooting.</p>
 <h3 id="pprof-endpoint-table">pprof Endpoint Table<a class="headerlink" href="#pprof-endpoint-table" title="Permanent link">#</a></h3>
@@ -3589,17 +3589,18 @@
 <td></td>
 </tr>
 <tr>
-<td>status-agent-controller</td>
+<td>status-addon-agent</td>
 <td>HTTP</td>
-<td>8083</td>
+<td>8082</td>
 <td>/debug/pprof/</td>
 <td>None</td>
 <td></td>
 </tr>
 </tbody>
 </table>
+<p><strong>Note:</strong> The listed ports are defaults. Currently, only the <code>ks-transport-controller</code> and <code>status-addon-agent</code> pprof ports are configurable via Helm values.</p>
 <h2 id="example-accessing-kubestellar-controller-metrics-and-debug-endpoints">Example: Accessing KubeStellar Controller Metrics and Debug Endpoints<a class="headerlink" href="#example-accessing-kubestellar-controller-metrics-and-debug-endpoints" title="Permanent link">#</a></h2>
-<p><strong>Note:</strong> The following example assumes you have a running KubeStellar controller-manager pod (not any other controller) and access to the appropriate Kubernetes context and namespace. The Deployment name is always <code>kubestellar-controller-manager</code>, but you may need to adjust the context and namespace for your environment.</p>
+<p><strong>Note:</strong> The following example assumes you have a running KubeStellar controller-manager pod and access to the appropriate Kubernetes context and namespace. The Deployment name is always <code>kubestellar-controller-manager</code>, but you may need to adjust the context and namespace for your environment.</p>
 <div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl<span class="w"> </span>--context<span class="w"> </span>kind-kubeflex<span class="w"> </span>port-forward<span class="w"> </span>-n<span class="w"> </span>wds1-system<span class="w"> </span>deployment/kubestellar-controller-manager<span class="w"> </span><span class="m">8443</span>:8443<span class="w"> </span><span class="m">8082</span>:8082
 </code></pre></div>
 <p>Access metrics: <a href="https://localhost:8443/metrics">https://localhost:8443/metrics</a> (Kubernetes client authentication required)</p>
