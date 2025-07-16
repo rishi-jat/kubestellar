@@ -1573,6 +1573,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Step 3: Wait for Certificate Signing Request">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loop-that-waits-for-certificate-signing-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      Loop that waits for Certificate Signing Request
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -3574,6 +3589,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Step 3: Wait for Certificate Signing Request">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loop-that-waits-for-certificate-signing-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      Loop that waits for Certificate Signing Request
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -3770,7 +3800,7 @@
 <p>This document explains how to register a Workload Execution Cluster (WEC) with an Inventory and Transport Space (ITS) in KubeStellar.</p>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
 <p>Registering a WEC with an ITS follows the same process as registering a managed cluster with an OCM hub. KubeStellar uses Open Cluster Management (OCM) for cluster registration and management.</p>
-<p>For the complete OCM registration process, refer to the <a href="https://open-cluster-management.io/docs/getting-started/installation/register-a-cluster/">official Open Cluster Management documentation</a>. The instructions below provide a complete registration process that is more focused on KubeStellar-specific considerations.</p>
+<p>The instructions below provide a comprehensive registration process focused on KubeStellar-specific considerations. For additional OCM registration details, refer to the <a href="https://open-cluster-management.io/docs/getting-started/installation/register-a-cluster/">official Open Cluster Management documentation</a>.</p>
 <h3 id="terminology-mapping">Terminology Mapping<a class="headerlink" href="#terminology-mapping" title="Permanent link">#</a></h3>
 <table>
 <thead>
@@ -3797,13 +3827,14 @@
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
 <p>Before registering a WEC, ensure you have:</p>
 <ol>
-<li><strong>A running Kubernetes cluster</strong> that will serve as the WEC</li>
-<li><strong>Network connectivity</strong> from the WEC to the KubeFlex hosting cluster (HTTPS connections must be possible)</li>
-<li><strong><code>kubectl</code> access</strong> to both the WEC and ITS</li>
-<li><strong><code>clusteradm</code> CLI tool</strong> installed on the machine where you'll run the registration commands (<a href="https://open-cluster-management.io/docs/getting-started/installation/start-the-control-plane/">installation guide</a>)</li>
 <li><strong>An existing ITS</strong> with OCM cluster manager running</li>
+<li><strong>A running Kubernetes cluster</strong> that will serve as the WEC</li>
+<li><strong>Network connectivity</strong> from the WEC to the ITS (HTTPS connections must be possible)</li>
+<li><strong><code>kubectl</code> access</strong> to both the WEC and ITS</li>
+<li><strong><code>clusteradm</code> CLI tool</strong> installed on the machine where you will run the registration commands (<a href="https://open-cluster-management.io/docs/getting-started/installation/start-the-control-plane/">installation guide</a>)</li>
 <li><strong>Sufficient permissions</strong> to create resources in both clusters (typically cluster-admin or equivalent)</li>
 </ol>
+<p>For a complete understanding of how WEC registration fits into the overall KubeStellar architecture, see <a href="../user-guide-intro/#the-full-story">The Full Story</a>.</p>
 <p>To verify your ITS is ready for WEC registration:</p>
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Check if the ITS is accessible (this returns a short result)</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>kubectl<span class="w"> </span>--context<span class="w"> </span>&lt;its-context&gt;<span class="w"> </span>get<span class="w"> </span>ServiceAccount<span class="w"> </span>default
@@ -3820,9 +3851,10 @@
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Get the registration token from the ITS</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>clusteradm<span class="w"> </span>--context<span class="w"> </span>&lt;its-context&gt;<span class="w"> </span>get<span class="w"> </span>token
 </code></pre></div>
-<p>This command outputs a <code>clusteradm join</code> command that you'll use in the next step.</p>
+<p>This command outputs a <code>clusteradm join</code> command that you will use in the next step. The token and apiserver URL from this command will be used in the join command.</p>
 <h3 id="step-2-join-the-wec-to-the-its">Step 2: Join the WEC to the ITS<a class="headerlink" href="#step-2-join-the-wec-to-the-its" title="Permanent link">#</a></h3>
-<p>Execute the join command on the WEC to initiate the registration process:</p>
+<p><strong>Important:</strong> Before executing the join command, determine if you need additional flags based on your environment. The basic command below may not work for all cluster types.</p>
+<p>Execute the join command on the WEC to initiate the registration process. The exact command depends on your environment:</p>
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Basic join command (additional flags may be required based on your environment)</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>clusteradm<span class="w"> </span>join<span class="w"> </span>--hub-token<span class="w"> </span>&lt;token&gt;<span class="w"> </span>--hub-apiserver<span class="w"> </span>&lt;api-server-url&gt;<span class="w"> </span>--cluster-name<span class="w"> </span>&lt;your-wec-name&gt;<span class="w"> </span>--context<span class="w"> </span>&lt;wec-context&gt;
 </code></pre></div>
@@ -3830,7 +3862,7 @@
 - <code>--cluster-name</code>: Choose a unique name for your WEC
 - <code>--context</code>: Specify the kubectl context for your WEC
 - <code>--singleton</code>: Use this flag if the WEC is a single-node cluster
-- <code>--force-internal-endpoint-lookup</code>: Required for Kind clusters and other local development setups</p>
+- <code>--force-internal-endpoint-lookup</code>: Required for Kind clusters and other clusters with internal-only API server endpoints</p>
 <p><strong>Example for Kind clusters:</strong>
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>clusteradm<span class="w"> </span>join<span class="w"> </span>--hub-token<span class="w"> </span>&lt;token&gt;<span class="w"> </span>--hub-apiserver<span class="w"> </span>&lt;api-server-url&gt;<span class="w"> </span>--cluster-name<span class="w"> </span>cluster1<span class="w"> </span>--context<span class="w"> </span>cluster1<span class="w"> </span>--singleton<span class="w"> </span>--force-internal-endpoint-lookup
 </code></pre></div></p>
@@ -3842,14 +3874,15 @@
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Check for pending certificate signing requests</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>kubectl<span class="w"> </span>--context<span class="w"> </span>&lt;its-context&gt;<span class="w"> </span>get<span class="w"> </span>csr
 </code></pre></div>
-<p>You should see a CSR with your WEC name and status <code>Pending</code>. This CSR is created by the OCM registration agent running on your WEC.</p>
-<p><strong>Wait for CSR to appear:</strong>
+<p>The first few attempts might not show the CSR with your WEC name and status <code>Pending</code>. Continue checking until the CSR appears. This CSR is created by the OCM registration agent running on your WEC.</p>
+<h4 id="loop-that-waits-for-certificate-signing-request">Loop that waits for Certificate Signing Request<a class="headerlink" href="#loop-that-waits-for-certificate-signing-request" title="Permanent link">#</a></h4>
+<p>The following bash loop automates the waiting described just above:</p>
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Wait for CSR to be created (this may take a few moments)</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">while</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>kubectl<span class="w"> </span>--context<span class="w"> </span>&lt;its-context&gt;<span class="w"> </span>get<span class="w"> </span>csr<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>&lt;your-wec-name&gt;<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Waiting for CSR to appear...&quot;</span>
 <a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span>sleep<span class="w"> </span><span class="m">5</span>
 <a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="k">done</span>
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="step-4-accept-the-registration">Step 4: Accept the Registration<a class="headerlink" href="#step-4-accept-the-registration" title="Permanent link">#</a></h3>
 <p>Approve the registration request from the ITS side:</p>
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Accept the WEC registration</span>
@@ -3892,7 +3925,7 @@
 <a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>kubectl<span class="w"> </span>--context<span class="w"> </span>&lt;its-context&gt;<span class="w"> </span>label<span class="w"> </span>managedcluster<span class="w"> </span>&lt;wec-name&gt;<span class="w"> </span><span class="nv">team</span><span class="o">=</span>platform<span class="w"> </span>business-unit<span class="o">=</span>engineering
 </code></pre></div>
 <h3 id="customization-properties">Customization Properties<a class="headerlink" href="#customization-properties" title="Permanent link">#</a></h3>
-<p>You can define additional properties for each WEC using ConfigMaps in the <code>customization-properties</code> namespace:</p>
+<p>You can define additional properties for a WEC using ConfigMaps in the <code>customization-properties</code> namespace:</p>
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Create customization properties</span>
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>kubectl<span class="w"> </span>--context<span class="w"> </span>&lt;its-context&gt;<span class="w"> </span>create<span class="w"> </span>configmap<span class="w"> </span>&lt;wec-name&gt;<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>-n<span class="w"> </span>customization-properties<span class="w"> </span><span class="se">\</span>
