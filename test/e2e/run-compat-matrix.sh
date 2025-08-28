@@ -20,11 +20,7 @@ set -e
 set -x
 
 # Get min required KubeFlex CLI version from check_pre_req.sh
-grep_minver() {
-  grep -E 'kflex.*min required version' "$1" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1
-}
-
-MIN_KFLEX_VERSION=$(grep_minver "$(dirname "$0")/../../scripts/check_pre_req.sh")
+MIN_KFLEX_VERSION=$(grep -oE "Kubeflex version: v[0-9]+\.[0-9]+\.[0-9]+" "$(dirname "$0")/../../scripts/check_pre_req.sh" | head -1 | grep -oE "[0-9]+\.[0-9]+\.[0-9]+")
 
 # List available KubeFlex CLI versions (simulate, replace with real fetch if needed)
 AVAILABLE_KFLEX_VERSIONS=("0.9.0" "0.10.0" "0.11.0" "0.12.0" "0.13.0")
