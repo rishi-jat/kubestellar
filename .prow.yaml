@@ -52,3 +52,17 @@ presubmits:
             requests:
               memory: 4Gi
               cpu: 2
+  - name: pull-kubestellar-e2e-compat-matrix
+    always_run: true
+    decorate: true
+    clone_uri: "https://github.com/kubestellar/kubestellar"
+    spec:
+      containers:
+        - image: ghcr.io/kubestellar/infra/build:1.24.2-1
+          command:
+            - bash
+            - test/e2e/run-compat-matrix.sh
+          resources:
+            requests:
+              memory: 8Gi
+              cpu: 4
