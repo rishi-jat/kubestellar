@@ -49,3 +49,21 @@ For the ginkgo-based test, normally every test case is run. However, the script 
 The kubestellar controller-manager will be invoked with `-v=2` unless otherwise specified on the command line with `--kubestellar-controller-manager-verbosity $number`. This verbosity can not be set to a value other than 2 when using `--released`.
 
 The transport controller will be invoked with `-v=4` unless otherwise specified on the command line with `--transport-controller-verbosity $number`.
+
+# Compatibility Matrix Testing
+
+A robust E2E compatibility matrix test is provided in `run-compat-matrix.sh`. This script:
+- Reads the minimum required KubeFlex CLI version from `scripts/check_pre_req.sh`.
+- Iterates over all available KubeFlex CLI versions >= min required.
+- For each version, installs the CLI, runs the E2E test, and records the result.
+- Prints a summary of compatibility results.
+
+This test is run automatically in CI via a Prow job (`pull-kubestellar-e2e-compat-matrix`).
+
+To run manually:
+
+```bash
+bash test/e2e/run-compat-matrix.sh
+```
+
+See the script for details on how to add or update tested versions.
