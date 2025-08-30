@@ -83,6 +83,38 @@ SRC_DIR="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)"
 COMMON_SRCS="${SRC_DIR}/../common"
 source "$COMMON_SRCS/setup-shell.sh"
 
+# Helper: wait for a Job to reach Complete, with a short fallback grace period
+# to handle controller propagation delays where a Job's Pod may succeed but
+# the Job condition isn't observed immediately by `kubectl wait`.
+# Parameters: <namespace> <job-name> <kubectl-wait-timeout-seconds>
+wait_for_job_complete() {
+  ns="$1"
+  job="$2"
+  timeout_secs="$3"
+
+  if kubectl wait -n "$ns" job.batch/"$job" --for condition=Complete --timeout "${timeout_secs}s"; then
+    return 0
+  fi
+
+  echo "WARNING: initial kubectl wait timed out for job '$job' in namespace '$ns'. Entering short grace poll..." >&2
+  # Short grace period (conservative) to allow the job controller to update status
+  grace_seconds=60
+  interval=5
+  elapsed=0
+  while [ $elapsed -lt $grace_seconds ]; do
+    job_complete=$(kubectl -n "$ns" get job "$job" -o jsonpath='{.status.conditions[?(@.type=="Complete")].status}' 2>/dev/null || true)
+    if [ "$job_complete" = "True" ]; then
+      echo "Job '$job' reported Complete during grace period; continuing..."
+      return 0
+    fi
+    sleep $interval
+    elapsed=$((elapsed + interval))
+  done
+
+  echo "ERROR: timed out waiting for job '$job' to complete after additional ${grace_seconds}s grace period." >&2
+  return 1
+}
+
 :
 : -------------------------------------------------------------------------
 : Create the KubeFlex hosting cluster, if necessary.
@@ -126,13 +158,43 @@ else
   fi
 popd
 
+
 : Waiting for OCM hub to be ready...
 kubectl wait controlplane.tenancy.kflex.kubestellar.org/its1 --for 'jsonpath={.status.postCreateHooks.its-hub-init}=true' --timeout 400s
-kubectl wait -n its1-system job.batch/its-hub-init --for condition=Complete --timeout 400s
-kubectl wait controlplane.tenancy.kflex.kubestellar.org/its1 --for 'jsonpath={.status.postCreateHooks.install-status-addon}=true' --timeout 400s
-kubectl wait -n its1-system job.batch/install-status-addon --for condition=Complete --timeout 400s
+wait_for_job_complete its1-system its-hub-init 400
+# Ensure required OCM CRDs are present before proceeding to install-status-addon.
+# Sometimes the its-hub-init job creates CRDs which take a short time to register; if
+# we attempt to install the status addon before those CRDs exist the helm install
+# will fail with 'no matches for kind'. Wait up to a conservative timeout.
+wait_for_crds() {
+  timeout_secs=${1:-180}
+  interval=5
+  elapsed=0
+  required_crds=("managedclustersetbindings.cluster.open-cluster-management.io" "placements.cluster.open-cluster-management.io")
+  while [ $elapsed -lt $timeout_secs ]; do
+    missing=()
+    for crd in "${required_crds[@]}"; do
+      if ! kubectl get crd "$crd" >/dev/null 2>&1; then
+        missing+=("$crd")
+      fi
+    done
+    if [ ${#missing[@]} -eq 0 ]; then
+      echo "Required OCM CRDs present: ${required_crds[*]}"
+      return 0
+    fi
+    echo "Waiting for CRDs to appear: ${missing[*]} (elapsed ${elapsed}s)" >&2
+    sleep $interval
+    elapsed=$((elapsed + interval))
+  done
+  echo "ERROR: Required OCM CRDs did not appear within ${timeout_secs}s: ${required_crds[*]}" >&2
+  return 1
+}
 
-kubectl wait -n its1-system job.batch/update-cluster-info --for condition=Complete --timeout 200s
+wait_for_crds 180
+kubectl wait controlplane.tenancy.kflex.kubestellar.org/its1 --for 'jsonpath={.status.postCreateHooks.install-status-addon}=true' --timeout 400s
+wait_for_job_complete its1-system install-status-addon 400
+
+wait_for_job_complete its1-system update-cluster-info 200
 
 wait-for-cmd "(kubectl --context '$HOSTING_CONTEXT' -n wds1-system wait --for=condition=Ready pod/\$(kubectl --context '$HOSTING_CONTEXT' -n wds1-system get pods -l name=transport-controller -o jsonpath='{.items[0].metadata.name}'))"
 
