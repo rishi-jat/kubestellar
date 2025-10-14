@@ -18,6 +18,7 @@ package status
 
 import (
 	"context"
+	"fmt"
 
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/util/sets"
@@ -63,7 +64,35 @@ func (c *Controller) updateWorkStatusToObject(ctx context.Context, workStatusON 
 
 func (c *Controller) syncWorkloadObject(ctx context.Context, wObjID util.ObjectIdentifier) error {
 	logger := klog.FromContext(ctx)
-	requested, nWECs := c.bindingPolicyResolver.GetSingletonReportedStateRequestForObject(wObjID)
+	isSingleRequested, nWECs := c.bindingPolicyResolver.GetSingletonReportedStateRequestForObject(wObjID)
+
+	if isSingleRequested {
+		return c.handleSingleton(isSingleRequested, nWECs, logger, wObjID, ctx)
+	}
+
+	// Implement this
+	// justCreating isMultiRequested, nWECsMulti to avoid error
+	var isMultiRequested bool
+	var nWECsMulti int
+
+	// isMultiRequested, nWECsMulti := c.bindingPolicyResolver.GetMultiReportedStateRequestForObject(wObjID)
+
+	if isMultiRequested && nWECsMulti <= 1 {
+		return c.handleSingleton(isSingleRequested, nWECs, logger, wObjID, ctx)
+	}
+
+	if isMultiRequested {
+		return c.handleMultiWECs(isMultiRequested, nWECs, logger, wObjID, ctx)
+	}
+
+	if err := c.updateObjectStatus(ctx, wObjID, nil, c.listers); err != nil {
+		return err
+	}
+	return nil
+
+}
+
+func (c *Controller) handleSingleton(requested bool, nWECs int, logger klog.Logger, wObjID util.ObjectIdentifier, ctx context.Context) error {
 	var wsONs [2]cache.ObjectName
 	var numWS int
 	if requested && nWECs == 1 {
@@ -104,4 +133,75 @@ func (c *Controller) syncWorkloadObject(ctx context.Context, wObjID util.ObjectI
 	}
 	logger.V(4).Info("Updated singleton status for workload object", "objId", wObjID, "workStatus", wsON)
 	return nil
+
+}
+
+func (c *Controller) handleMultiWECs(requested bool, nWECs int, logger klog.Logger, wObjID util.ObjectIdentifier, ctx context.Context) error {
+	var wsONs []cache.ObjectName
+	var numWS int
+
+	c.workStatusToObject.ReadInverse().ContGet(wObjID, func(wsONSet sets.Set[cache.ObjectName]) {
+		numWS = wsONSet.Len()
+		wsONs = make([]cache.ObjectName, 0, numWS)
+		for it := range wsONSet {
+			wsONs = append(wsONs, it)
+		}
+	})
+
+	// loop through all wsONs to get workstatus from every clusters. and update the aggregated status
+	aggregatedStatus := make(map[string]interface{})
+
+	for _, items := range wsONs {
+		// items will have namespace and name.
+		// in each loop we are getting status from different clusters
+		// and performing actions based on datatype.
+		wsObj, err := c.workStatusLister.ByNamespace(items.Namespace).Get(items.Name)
+		if err != nil {
+			return err
+		}
+
+		status, err := util.GetWorkStatusStatus(wsObj)
+		if err != nil {
+			return err
+		}
+		if status == nil {
+			return nil
+		}
+
+		// loop through each key, value of status we get.
+
+		for key, value := range status {
+
+			// perform action based on datatype
+			switch value.(type) {
+			case int:
+				// perform int operation
+				// make separate function for this that may take
+				// `aggregatedStatus`, key, value
+				// with each operation update its key value in `aggregatedStatus`
+			case string:
+				// perform string operation
+				// with each operation update its key value in `aggregatedStatus`
+
+			case []map[string]interface{}: // this can be used for Status.Conditions[]
+				// perform speficic operation.
+
+			default:
+				// for other data types do nothing
+
+			}
+
+		}
+
+	}
+
+	if aggregatedStatus == nil {
+		return nil
+	}
+	if err := c.updateObjectStatus(ctx, wObjID, aggregatedStatus, c.listers); err != nil {
+		return err
+	}
+	logger.V(4).Info("Updated multiwecs status")
+	return nil
+
 }
