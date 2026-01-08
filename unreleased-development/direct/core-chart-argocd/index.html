@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../favicons/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -4288,7 +4288,7 @@ This section will cover installing Argo CD and mapping WDSes to target clusters;
 <div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>helm<span class="w"> </span>upgrade<span class="w"> </span>--install<span class="w"> </span>ks-core<span class="w"> </span>core-chart<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>--set<span class="w"> </span>argocd.install<span class="o">=</span><span class="nb">true</span>
 </code></pre></div>
-<p><strong>Expected output:</strong>
+<p><strong>Expected output:</strong></p>
 <div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Release &quot;ks-core&quot; has been upgraded. Happy Helming!
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>NAME: ks-core
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>LAST DEPLOYED: Thu Jun 12 11:02:16 2025
@@ -4317,19 +4317,19 @@ This section will cover installing Argo CD and mapping WDSes to target clusters;
 <a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>Access Argo CD UI at https://argocd.localtest.me (append :9443 for Kind or k3s installations).
 <a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>Obtain Argo CD admin password using the command:
 <a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>kubectl -n default get secret argocd-initial-admin-secret -o jsonpath=&quot;{.data.password}&quot; | base64 -d
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="retrieve-argo-cd-admin-password">Retrieve Argo CD admin password<a class="headerlink" href="#retrieve-argo-cd-admin-password" title="Permanent link">#</a></h3>
 <p>The initial password for the <code>admin</code> user can be retrieved using the following command:</p>
 <div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>default<span class="w"> </span>get<span class="w"> </span>secret<span class="w"> </span>argocd-initial-admin-secret<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&quot;{.data.password}&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d
 </code></pre></div>
-<p><strong>Expected output(similar):</strong>
+<p><strong>Expected output(similar):</strong></p>
 <div class="language-text highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>EpQ2-OMgvfdHiMiD
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="verify-argo-cd-installation">Verify Argo CD installation<a class="headerlink" href="#verify-argo-cd-installation" title="Permanent link">#</a></h3>
 <p>Verify that all Argo CD components are running:</p>
 <div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-A<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>argo
 </code></pre></div>
-<p><strong>Expected output (similar to):</strong>
+<p><strong>Expected output (similar to):</strong></p>
 <div class="language-text highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>default              ks-core-argocd-application-controller-0                     1/1     Running     0          15m
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>default              ks-core-argocd-applicationset-controller-6669c9f789-wd5h7   1/1     Running     0          15m
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>default              ks-core-argocd-dex-server-8464bc64b9-dplv5                  1/1     Running     0          15m
@@ -4337,15 +4337,17 @@ This section will cover installing Argo CD and mapping WDSes to target clusters;
 <a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>default              ks-core-argocd-redis-76c6b4db57-7cfrs                       1/1     Running     0          15m
 <a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>default              ks-core-argocd-repo-server-6774bd65db-rxmtz                 1/1     Running     0          15m
 <a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>default              ks-core-argocd-server-84cbbd8cbd-bpl92                      1/1     Running     0          15m
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="access-argo-cd-ui">Access Argo CD UI<a class="headerlink" href="#access-argo-cd-ui" title="Permanent link">#</a></h3>
 <p>Open your browser and navigate to: <code>https://argocd.localtest.me:9443/</code></p>
-<p><strong>Login credentials:</strong>
-- <strong>Username</strong>: <code>admin</code>
-- <strong>Password</strong>: Use the password obtained from the previous command (e.g., <code>EpQ2-OMgvfdHiMiD</code>)</p>
+<p><strong>Login credentials:</strong></p>
+<ul>
+<li><strong>Username</strong>: <code>admin</code></li>
+<li><strong>Password</strong>: Use the password obtained from the previous command (e.g., <code>EpQ2-OMgvfdHiMiD</code>)</li>
+</ul>
 <blockquote>
 <p><strong>Note:</strong> If you encounter SSL certificate warnings in your browser, proceed with "Advanced" → "Proceed to argocd.localtest.me (unsafe)" or similar option, as this is expected for local development setups.
-<figure><img src="../images/argo-cd-signin-page.png" /><figcaption>alt text</figcaption>
+<figure><img src="../images/argo-cd-signin-page.png" /><figcaption>Argo CD sign-in page</figcaption>
 </figure>
 </p>
 </blockquote>
@@ -4366,7 +4368,7 @@ This section will cover installing Argo CD and mapping WDSes to target clusters;
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>--set-json<span class="o">=</span><span class="s1">&#39;argocd.applications=[ { &quot;name&quot;: &quot;scenario-6&quot;, &quot;repoURL&quot;: &quot;https://github.com/kubestellar/kubestellar.git&quot;, &quot;path&quot;: &quot;hack/argo/nginx&quot;, &quot;destinationWDS&quot;: &quot;wds1&quot;, &quot;destinationNamespace&quot;: &quot;nginx-sa&quot; } ]&#39;</span>
 </code></pre></div>
 <p>
-<figure><img src="../images/argocd-application.png" /><figcaption>alt text</figcaption>
+<figure><img src="../images/argocd-application.png" /><figcaption>Argo CD application</figcaption>
 </figure>
 </p>
 <blockquote>
@@ -4519,10 +4521,10 @@ This section will cover installing Argo CD and mapping WDSes to target clusters;
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "navigation.indexes", "navigation.tabs", "navigation.path", "navigation.footer", "navigation.top", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "navigation.indexes", "navigation.tabs", "navigation.path", "navigation.footer", "navigation.top", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="../../js/open_in_new_tab.js"></script>
       

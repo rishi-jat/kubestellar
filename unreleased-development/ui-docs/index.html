@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../favicons/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -4352,30 +4352,32 @@ You can use <a href="https://github.com/nvm-sh/nvm">nvm</a> to manage multiple N
 </ul>
 <h2 id="installation-steps">Installation Steps<a class="headerlink" href="#installation-steps" title="Permanent link">#</a></h2>
 <p>Clone the Repository</p>
-<p><div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/your-github-username/ui.git
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/your-github-username/ui.git
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span><span class="w"> </span>ui
 </code></pre></div>
-Then go through one of the setup options below:
-- <a href="#local-setup">Local Setup</a>
-- <a href="#local-setup-with-docker-compose">Local Setup with Docker Compose</a></p>
+<p>Then go through one of the setup options below:</p>
+<ul>
+<li><a href="#local-setup">Local Setup</a></li>
+<li><a href="#local-setup-with-docker-compose">Local Setup with Docker Compose</a></li>
+</ul>
 <h3 id="local-setup">Local Setup<a class="headerlink" href="#local-setup" title="Permanent link">#</a></h3>
 <h4 id="step-1-create-env-file-for-frontend-configuration">Step 1: Create <code>.env</code> File for Frontend Configuration<a class="headerlink" href="#step-1-create-env-file-for-frontend-configuration" title="Permanent link">#</a></h4>
 <p>To configure the frontend, copy the <code>.env.example</code> file to a <code>.env</code> file in the project root directory (where <code>package.json</code> is located).</p>
 <div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cp<span class="w"> </span>.env.example<span class="w"> </span>.env
 </code></pre></div>
-<p><strong>Example <code>.env</code> file:</strong>  </p>
+<p><strong>Example <code>.env</code> file:</strong></p>
 <div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>VITE_BASE_URL=http://localhost:4000
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>VITE_APP_VERSION=0.1.0
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>VITE_GIT_COMMIT_HASH=$GIT_COMMIT_HASH
 </code></pre></div>
 <blockquote>
-<p>[!NOTE] 
+<p>[!NOTE]
 This is because <code>.env</code> files are intended to be a personal environment configuration file. The included <code>.env.example</code> in the repo is a standard that most other node projects include for the same purpose. You rename the file to <code>.env</code> and then change its contents to align with your system and personal needs.</p>
 </blockquote>
 <h5 id="tracking-application-version-and-git-commit-hash">Tracking Application Version and Git Commit Hash<a class="headerlink" href="#tracking-application-version-and-git-commit-hash" title="Permanent link">#</a></h5>
-<p>KubestellarUI uses environment variables to track the app version and the current Git commit hash.  </p>
-<p><strong>Environment Variables</strong>  </p>
+<p>KubestellarUI uses environment variables to track the app version and the current Git commit hash.</p>
+<p><strong>Environment Variables</strong></p>
 <table>
 <thead>
 <tr>
@@ -4403,11 +4405,11 @@ This is because <code>.env</code> files are intended to be a personal environmen
 </tbody>
 </table>
 <h4 id="step-2-run-redis-container-optional">Step 2: Run Redis Container (Optional)<a class="headerlink" href="#step-2-run-redis-container-optional" title="Permanent link">#</a></h4>
-<p>KubestellarUI uses Redis for caching real-time WebSocket updates to prevent excessive Kubernetes API calls.  </p>
-<p>Run Redis using Docker:  </p>
+<p>KubestellarUI uses Redis for caching real-time WebSocket updates to prevent excessive Kubernetes API calls.</p>
+<p>Run Redis using Docker:</p>
 <div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--name<span class="w"> </span>redis<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">6379</span>:6379<span class="w"> </span>redis
 </code></pre></div>
-<p>Verify Redis is running:  </p>
+<p>Verify Redis is running:</p>
 <div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>ps<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>redis
 </code></pre></div>
 <h4 id="step-3-install-and-run-the-backend">Step 3: Install and Run the Backend<a class="headerlink" href="#step-3-install-and-run-the-backend" title="Permanent link">#</a></h4>
@@ -4433,7 +4435,7 @@ This is because <code>.env</code> files are intended to be a personal environmen
 <li><strong>Download Link</strong>: <a href="https://www.docker.com/products/docker-desktop">Docker Downloads</a></li>
 </ul>
 <blockquote>
-<p>[!NOTE] 
+<p>[!NOTE]
 If you are using Compose V1, change the <code>docker compose</code> command to <code>docker-compose</code> in the following steps.
 Checkout <a href="https://docs.docker.com/compose/releases/migrate/">Migrating to Compose V2</a> for more info.</p>
 </blockquote>
@@ -4448,48 +4450,46 @@ Checkout <a href="https://docs.docker.com/compose/releases/migrate/">Migrating t
 <h4 id="use-docker-compose-in-development-cycle">Use Docker Compose in Development Cycle<a class="headerlink" href="#use-docker-compose-in-development-cycle" title="Permanent link">#</a></h4>
 <p>For ongoing development, use the following steps:</p>
 <ul>
-<li>
-<p><strong>Step 1: Stop the running Application</strong>:
-  <div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>down
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>Step 2: Pull the Latest Source Code Changes</strong>:
-  <div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>main
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>Step 3: Rebuild and Restart the Application</strong>:
-  <div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>--build
+<li><strong>Step 1: Stop the running Application</strong>:</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>down
 </code></pre></div>
-This will:</p>
-</li>
-<li>
-<p>Stop the running containers.</p>
-</li>
+<ul>
+<li><strong>Step 2: Pull the Latest Source Code Changes</strong>:</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>main
+</code></pre></div>
+<ul>
+<li><strong>Step 3: Rebuild and Restart the Application</strong>:</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>--build
+</code></pre></div>
+<p>This will:</p>
+<ul>
+<li>Stop the running containers.</li>
 <li>Pull the latest source code changes.</li>
 <li>Rebuild and restart the application.</li>
 </ul>
 <h2 id="install-golangci-lint"><strong>🚀 Install GolangCI-Lint</strong><a class="headerlink" href="#install-golangci-lint" title="Permanent link">#</a></h2>
 <p>To install <strong>GolangCI-Lint</strong>, follow these steps:</p>
 <h3 id="linux-macos"><strong>🔹 Linux &amp; macOS</strong><a class="headerlink" href="#linux-macos" title="Permanent link">#</a></h3>
-<p>Run the following command:
+<p>Run the following command:</p>
 <div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>curl<span class="w"> </span>-sSfL<span class="w"> </span>https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh<span class="w"> </span>-s<span class="w"> </span>--<span class="w"> </span>-b<span class="w"> </span><span class="k">$(</span>go<span class="w"> </span>env<span class="w"> </span>GOPATH<span class="k">)</span>/bin<span class="w"> </span>v1.54.2
 </code></pre></div>
-Ensure <code>$(go env GOPATH)/bin</code> is in your <code>PATH</code>:
+<p>Ensure <code>$(go env GOPATH)/bin</code> is in your <code>PATH</code>:</p>
 <div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="k">$(</span>go<span class="w"> </span>env<span class="w"> </span>GOPATH<span class="k">)</span>/bin:<span class="nv">$PATH</span>
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="windows"><strong>🔹 Windows</strong><a class="headerlink" href="#windows" title="Permanent link">#</a></h3>
-<p>Use <strong>scoop</strong> (recommended):
+<p>Use <strong>scoop</strong> (recommended):</p>
 <div class="language-powershell highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">scoop</span> <span class="n">install</span> <span class="n">golangci-lint</span>
 </code></pre></div>
-Or <strong>Go install</strong>:
+<p>Or <strong>Go install</strong>:</p>
 <div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>go<span class="w"> </span>install<span class="w"> </span>github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="verify-installation"><strong>🔹 Verify Installation</strong><a class="headerlink" href="#verify-installation" title="Permanent link">#</a></h3>
-<p>Run:
+<p>Run:</p>
 <div class="language-sh highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>golangci-lint<span class="w"> </span>--version
-</code></pre></div></p>
+</code></pre></div>
 <hr />
 <h2 id="linting-fixing-code"><strong>🛠 Linting &amp; Fixing Code</strong><a class="headerlink" href="#linting-fixing-code" title="Permanent link">#</a></h2>
 <h3 id="check-for-issues"><strong>🔹 Check for Issues</strong><a class="headerlink" href="#check-for-issues" title="Permanent link">#</a></h3>
@@ -4504,8 +4504,12 @@ Or <strong>Go install</strong>:
 <h3 id="docker-image-versioning-and-pulling">Docker Image Versioning and Pulling<a class="headerlink" href="#docker-image-versioning-and-pulling" title="Permanent link">#</a></h3>
 <p>If you'd like to work with the Docker images for the <strong>KubestellarUI</strong> project, here's how you can use the <code>latest</code> and versioned tags:</p>
 <ol>
-<li><strong>Frontend Image</strong>:</li>
-<li>Tag: <code>quay.io/kubestellar/ui:frontend</code></li>
+<li>
+<p><strong>Frontend Image</strong>:</p>
+</li>
+<li>
+<p>Tag: <code>quay.io/kubestellar/ui:frontend</code></p>
+</li>
 <li>Latest Version: <code>latest</code></li>
 <li>
 <p>Specific Version (Commit Hash): <code>frontend-&lt;commit-hash&gt;</code></p>
@@ -4519,30 +4523,26 @@ Or <strong>Go install</strong>:
 </ol>
 <h4 id="how-to-pull-the-latest-images">How to Pull the Latest Images:<a class="headerlink" href="#how-to-pull-the-latest-images" title="Permanent link">#</a></h4>
 <ul>
-<li>
-<p><strong>Frontend Image</strong>:
-  <div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>quay.io/kubestellar/ui:frontend
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>Backend Image</strong>:
+<li><strong>Frontend Image</strong>:</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>quay.io/kubestellar/ui:frontend
+</code></pre></div>
+<ul>
+<li><strong>Backend Image</strong>:
   <div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>quay.io/kubestellar/ui:backend
-</code></pre></div></p>
-</li>
+</code></pre></div></li>
 </ul>
 <h4 id="how-to-pull-specific-version-commit-hash">How to Pull Specific Version (Commit Hash):<a class="headerlink" href="#how-to-pull-specific-version-commit-hash" title="Permanent link">#</a></h4>
 <p>If you want to pull an image for a specific version (e.g., commit hash), use:</p>
 <ul>
-<li>
-<p><strong>Frontend Image with Version</strong>:
-  <div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>quay.io/kubestellar/ui:frontend-abcd1234
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>Backend Image with Version</strong>:
+<li><strong>Frontend Image with Version</strong>:</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>quay.io/kubestellar/ui:frontend-abcd1234
+</code></pre></div>
+<ul>
+<li><strong>Backend Image with Version</strong>:
   <div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>quay.io/kubestellar/ui:backend-abcd1234
-</code></pre></div></p>
-</li>
+</code></pre></div></li>
 </ul>
 <h3 id="accessing-the-application">Accessing the Application<a class="headerlink" href="#accessing-the-application" title="Permanent link">#</a></h3>
 <ol>
@@ -4555,7 +4555,7 @@ Or <strong>Go install</strong>:
 <p><br></p>
 <center>
 <a href="https://github.com/kubestellar/ui/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=kubestellar/ui" />
+  <img alt="Contributors" src="https://contrib.rocks/image?repo=kubestellar/ui" />
 </a>
 </center>
 <p><br></p>
@@ -4668,10 +4668,10 @@ Or <strong>Go install</strong>:
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "navigation.indexes", "navigation.tabs", "navigation.path", "navigation.footer", "navigation.top", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "navigation.indexes", "navigation.tabs", "navigation.path", "navigation.footer", "navigation.top", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="../js/open_in_new_tab.js"></script>
       

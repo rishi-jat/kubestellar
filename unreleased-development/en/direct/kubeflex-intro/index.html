@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../favicons/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -4079,7 +4079,7 @@
   
 
 
-<h1 id="kubeflex"><img alt="Logo" width="90px" src="../images/kubeflex-logo.png" style="vertical-align: middle;" />  KubeFlex<a class="headerlink" href="#kubeflex" title="Permanent link">#</a></h1>
+<h1 id="kubeflex"><img alt="Logo" width="90px" src="../images/kubeflex-logo.png" style="vertical-align: middle;" /> KubeFlex<a class="headerlink" href="#kubeflex" title="Permanent link">#</a></h1>
 <p>One of the technologies underlying KubeStellar is KubeFlex, a kubernetes-based platform designed to:</p>
 <ul>
 <li>Provide lightweight Kube API Server instances and selected controllers as a service.</li>
@@ -4090,29 +4090,29 @@
 <p>KubeFlex is a flexible framework that supports various kinds of control planes, such as:</p>
 <ul>
 <li>
-<p><em>k8s</em>: a basic Kubernetes API Server with a subset of kube controllers. 
-The control plane in this context does not execute workloads, such as pods, 
-because the controllers associated with these objects are not activated. 
-This environment is referred to as ‘denatured’ because it lacks the typical 
-characteristics and functionalities of a standard Kubernetes cluster
-It uses about 350 MB of memory per instance with a shared Postgres Database Backend.</p>
+<p><em>k8s</em>: a basic Kubernetes API Server with a subset of kube controllers.
+  The control plane in this context does not execute workloads, such as pods,
+  because the controllers associated with these objects are not activated.
+  This environment is referred to as ‘denatured’ because it lacks the typical
+  characteristics and functionalities of a standard Kubernetes cluster
+  It uses about 350 MB of memory per instance with a shared Postgres Database Backend.</p>
 </li>
 <li>
-<p><em>vcluster</em>: a virtual cluster that runs on the hosting cluster, 
-based on the  <a href="https://www.vcluster.com">vCluster Project</a>. This type of control 
-plane can run pods using worker nodes of the hosting cluster.</p>
+<p><em>vcluster</em>: a virtual cluster that runs on the hosting cluster,
+  based on the <a href="https://www.vcluster.com">vCluster Project</a>. This type of control
+  plane can run pods using worker nodes of the hosting cluster.</p>
 </li>
 <li>
 <p><em>host</em>: the KubeFlex hosting cluster, which is exposed as a control plane.</p>
 </li>
 <li>
 <p><em>external</em>: an external cluster that is imported as a control plane (this
-is in the roadmap but not yet implemented)</p>
+  is in the roadmap but not yet implemented)</p>
 </li>
 <li>
-<p><em>ocm</em>: a control plane that uses the 
-<a href="https://github.com/open-cluster-management-io/multicluster-controlplane">multicluster-controlplane project</a> 
-for managing multiple clusters.</p>
+<p><em>ocm</em>: a control plane that uses the
+  <a href="https://github.com/open-cluster-management-io/multicluster-controlplane">multicluster-controlplane project</a>
+  for managing multiple clusters.</p>
 </li>
 </ul>
 <p>When using KubeFlex, users interact with the API server of the hosting cluster to create or delete control planes.
@@ -4121,7 +4121,7 @@ KubeFlex defines a ControlPlane CRD that represents a Control Plane.</p>
 <p>To explore more fully KubeFlex's capabilities <a href="https://github.com/kubestellar/kubeflex">visit the repository at https://github.com/kubestellar/kubeflex</a></p>
 <p>There is also a <a href="https://youtu.be/vI2O0L5ijVU?si=p32OUaQU96JOs5iH">introductory video about KubeFlex</a> on the KubeStellar YouTube Channel</p>
 <p>
-<figure><img src="../images/kubeflex-architecture.png" /><figcaption>image info</figcaption>
+<figure><img src="../images/kubeflex-architecture.png" /><figcaption>KubeFlex Architecture</figcaption>
 </figure>
 </p>
 
@@ -4271,10 +4271,10 @@ KubeFlex defines a ControlPlane CRD that represents a Control Plane.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "navigation.indexes", "navigation.tabs", "navigation.path", "navigation.footer", "navigation.top", "content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "navigation.indexes", "navigation.tabs", "navigation.path", "navigation.footer", "navigation.top", "content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

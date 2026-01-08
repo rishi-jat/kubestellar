@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../favicons/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -4173,6 +4173,7 @@ For WMW, we need one for Kubernetes and one for KubeStellar's edge API.</li>
 </code></pre></div>
 
 Make sure `resource.exclusions` exists in the `data` field of the `argocd-cm` configmap as follows:
+
 <div class="language-yaml highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">data</span><span class="p">:</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">resource.exclusions</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="no">- apiGroups:</span>
@@ -4184,10 +4185,12 @@ Make sure `resource.exclusions` exists in the `data` field of the `argocd-cm` co
 </code></pre></div>
 
 Restart the Argo CD server.
+
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>argocd<span class="w"> </span>rollout<span class="w"> </span>restart<span class="w"> </span>deployment<span class="w"> </span>argocd-server
 </code></pre></div>
 
 Argo CD's documentation mentions this feature as [Resource Exclusion/Inclusion](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#resource-exclusioninclusion).
+
 </li>
 <li>Make sure the current context uses WMW, then identify the admin.kubeconfig.
 The command and output should be similar to
@@ -4200,12 +4203,15 @@ The command and output should be similar to
 </code></pre></div>
 
 ### Create Argo CD Applications
+
 Once KubeStellar's workspaces are added, Argo CD Applications can be created as normal.
 There are a few examples listed [here](https://github.com/edge-experiments/gitops-source/tree/main/kubestellar),
 and the commands to use the examples are listed as follows.
 
 #### Create Argo CD Applications against KubeStellar's IMW
+
 Create two Locations. The command and output should be similar to
+
 <div class="language-console highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="gp">$ </span>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>locations<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>--repo<span class="w"> </span>https://github.com/edge-experiments/gitops-source.git<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>--path<span class="w"> </span>kubestellar/locations/<span class="w"> </span><span class="se">\</span>
@@ -4215,6 +4221,7 @@ Create two Locations. The command and output should be similar to
 </code></pre></div>
 
 Create two SyncTargets. The command and output should be similar to
+
 <div class="language-console highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="gp">$ </span>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>synctargets<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>--repo<span class="w"> </span>https://github.com/edge-experiments/gitops-source.git<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>--path<span class="w"> </span>kubestellar/synctargets/<span class="w"> </span><span class="se">\</span>
@@ -4224,7 +4231,9 @@ Create two SyncTargets. The command and output should be similar to
 </code></pre></div>
 
 #### Create Argo CD Application against KubeStellar's WMW
+
 Create a Namespace. The command and output should be similar to
+
 <div class="language-console highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="gp">$ </span>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>--repo<span class="w"> </span>https://github.com/edge-experiments/gitops-source.git<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>--path<span class="w"> </span>kubestellar/namespaces/<span class="w"> </span><span class="se">\</span>
@@ -4234,6 +4243,7 @@ Create a Namespace. The command and output should be similar to
 </code></pre></div>
 
 Create a Deployment for 'cpumemload'. The command and output should be similar to
+
 <div class="language-console highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="gp">$ </span>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>cpumemload<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>--repo<span class="w"> </span>https://github.com/edge-experiments/gitops-source.git<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>--path<span class="w"> </span>kubestellar/workloads/cpumemload/<span class="w"> </span><span class="se">\</span>
@@ -4243,6 +4253,7 @@ Create a Deployment for 'cpumemload'. The command and output should be similar t
 </code></pre></div>
 
 Create an EdgePlacement. The command and output should be similar to
+
 <div class="language-console highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="gp">$ </span>argocd<span class="w"> </span>app<span class="w"> </span>create<span class="w"> </span>edgeplacement<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>--repo<span class="w"> </span>https://github.com/edge-experiments/gitops-source.git<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>--path<span class="w"> </span>kubestellar/placements/<span class="w"> </span><span class="se">\</span>
@@ -4250,6 +4261,7 @@ Create an EdgePlacement. The command and output should be similar to
 <a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>--sync-policy<span class="w"> </span>automated
 <a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="go">application &#39;edgeplacement&#39; created</span>
 </code></pre></div>
+
 </li>
 </ol>
 
@@ -4260,7 +4272,7 @@ Medium - <a href="https://medium.com/@clubanderson/gitopscon-here-we-come-9a8b8f
 <h3 id="argocd-scale-experiment-kubestellar-community-demo-day">ArgoCD Scale Experiment - KubeStellar Community Demo Day<a class="headerlink" href="#argocd-scale-experiment-kubestellar-community-demo-day" title="Permanent link">#</a></h3>
 <p align=center>
 <div id="spinner1">
-  <img width="140" height="140" src="../../../images/spinner.gif" class="centerImage">
+  <img alt="Spinner" width="140" height="140" src="../../../images/spinner.gif" class="centerImage">
 </div>
 <iframe class="centerImage" id="embed1" width="720" height="400" src="https://www.youtube.com/embed/7XuEJF7--Sc?start=90" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="visibility:hidden;" onload= "document.getElementById('spinner1').style.display='none';document.getElementById('embed1').style.visibility='visible';document.getElementById('embed1').width='720';document.getElementById('embed1').height='400';"></iframe>
 </p>
@@ -4268,7 +4280,7 @@ Medium - <a href="https://medium.com/@clubanderson/gitopscon-here-we-come-9a8b8f
 <h3 id="gitopscon-2023-a-quantitative-study-on-argo-scalability-andrew-anderson-jun-duan-ibm">GitOpsCon 2023 - A Quantitative Study on Argo Scalability - Andrew Anderson &amp; Jun Duan, IBM<a class="headerlink" href="#gitopscon-2023-a-quantitative-study-on-argo-scalability-andrew-anderson-jun-duan-ibm" title="Permanent link">#</a></h3>
 <p align=center>
 <div id="spinner2">
-  <img width="140" height="140" src="../../../images/spinner.gif" class="centerImage">
+  <img alt="Spinner" width="140" height="140" src="../../../images/spinner.gif" class="centerImage">
 </div>
 <iframe class="centerImage" id="embed2" width="0" height="0" src="https://www.youtube.com/embed/PB3OTXDjFjg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="visibility:hidden;" onload= "document.getElementById('spinner2').style.display='none';document.getElementById('embed2').style.visibility='visible';document.getElementById('embed2').width='720';document.getElementById('embed2').height='400';"></iframe>
 </p>
@@ -4276,28 +4288,28 @@ Medium - <a href="https://medium.com/@clubanderson/gitopscon-here-we-come-9a8b8f
 <h3 id="argocd-and-kubestellar-in-the-news">ArgoCD and KubeStellar in the news<a class="headerlink" href="#argocd-and-kubestellar-in-the-news" title="Permanent link">#</a></h3>
 <p align=center>
 <div id="spinner3">
-  <img width="140" height="140" src="../../../images/spinner.gif" class="centerImage">
+  <img alt="Spinner" width="140" height="140" src="../../../images/spinner.gif" class="centerImage">
 </div>
 <iframe class="centerImage" id="embed3" src="https://www.linkedin.com/embed/feed/update/urn:li:share:7031032280722632704" scrolling=no height="0" width="0" frameborder="0" allowfullscreen="" title="Embedded post" style="visibility:hidden;" onload= "document.getElementById('spinner3').style.display='none';document.getElementById('embed3').style.visibility='visible';document.getElementById('embed3').width='740';document.getElementById('embed3').height='400';"></iframe>
 </p>
 <p></br></p>
 <p align=center>
 <div id="spinner4">
-  <img width="140" height="140" src="../../../images/spinner.gif" class="centerImage">
+  <img alt="Spinner" width="140" height="140" src="../../../images/spinner.gif" class="centerImage">
 </div>
 <iframe class="centerImage" id="embed4" src="https://www.linkedin.com/embed/feed/update/urn:li:share:7046166635367268352" scrolling=no height="0" width="0" frameborder="0" allowfullscreen="" title="Embedded post" style="visibility:hidden;" onload="document.getElementById('spinner4').style.display='none';document.getElementById('embed4').style.visibility='visible';document.getElementById('embed4').width='740';document.getElementById('embed4').height='400';"></iframe>
 </p>
 <p></br></p>
 <p align=center>
 <div id="spinner5">
-  <img width="140" height="140" src="../../../images/spinner.gif" class="centerImage">
+  <img alt="Spinner" width="140" height="140" src="../../../images/spinner.gif" class="centerImage">
 </div>
 <iframe class="centerImage" id="embed5" src="https://www.linkedin.com/embed/feed/update/urn:li:share:7060337925300838400" scrolling=no height="0" width="0" frameborder="0" allowfullscreen="" title="Embedded post" style="visibility:hidden;" onload="document.getElementById('spinner5').style.display='none';document.getElementById('embed5').style.visibility='visible';document.getElementById('embed5').width='740';document.getElementById('embed5').height='400';"></iframe>
 </p>
 <p></br></p>
 <p align=center>
 <div id="spinner6">
-  <img width="140" height="140" src="../../../images/spinner.gif" class="centerImage">
+  <img alt="Spinner" width="140" height="140" src="../../../images/spinner.gif" class="centerImage">
 </div>
 <iframe class="centerImage" id="embed6" src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7074718212461899776" scrolling=no height="0" width="0" frameborder="0" allowfullscreen="" title="Embedded post" style="visibility:hidden;" onload="document.getElementById('spinner6').style.display='none';document.getElementById('embed6').style.visibility='visible';document.getElementById('embed6').width='740';document.getElementById('embed6').height='400';"></iframe>
 </p>
@@ -4456,10 +4468,10 @@ Medium - <a href="https://medium.com/@clubanderson/gitopscon-here-we-come-9a8b8f
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "navigation.indexes", "navigation.tabs", "navigation.path", "navigation.footer", "navigation.top", "content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "navigation.indexes", "navigation.tabs", "navigation.path", "navigation.footer", "navigation.top", "content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="../../../js/open_in_new_tab.js"></script>
       

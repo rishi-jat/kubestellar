@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../favicons/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -4140,23 +4140,26 @@
 <h1 id="testing-a-new-kubestellar-release">Testing a new KubeStellar Release<a class="headerlink" href="#testing-a-new-kubestellar-release" title="Permanent link">#</a></h1>
 <p>The following testing process should be applied to every new KubeStellar release in order to validate it, this include both regular releases and release candidates. All the tests should be done while the KubeStellar code is still under code-freeze and new code shouldn't be merged into the main branch until all tests are passed and the release is officially declared as ready.<br />
 In case the release tests fail (even one of them), the release should be declared as unstable and a fix through a new release candidate should be worked on ASAP. The KubeStellar code-freeze should be lifted only after all tests are passed and a the release was completed.<br />
-To reduce the exposure of unstable releases the update of the KubeStellar site <a href="https://docs.kubestellar.io">kubestellar.io</a> should be done only once all release tests passed successfully. </p>
+To reduce the exposure of unstable releases the update of the KubeStellar site <a href="https://docs.kubestellar.io">kubestellar.io</a> should be done only once all release tests passed successfully.</p>
 <h2 id="release-tests">Release tests<a class="headerlink" href="#release-tests" title="Permanent link">#</a></h2>
 <p>The following section describe the tests that must be executed for each release.</p>
-<p>Our release tests consists of:
-   * Automatic tests running on Ubuntu X86 (see below)
-   * Manually initiated tests running on OCP (TODO: add specific version and machine details)</p>
-<p>Due to the lack of OCP based automatic testing, these tests will be performed only once a release candidate passed all other tests and is a candidate to become a regular release. </p>
-<p>Note:  We plan to automate all release tests in the future</p>
+<p>Our release tests consists of:</p>
+<ul>
+<li>Automatic tests running on Ubuntu X86 (see below)</li>
+<li>Manually initiated tests running on OCP (TODO: add specific version and machine details)</li>
+</ul>
+<p>Due to the lack of OCP based automatic testing, these tests will be performed only once a release candidate passed all other tests and is a candidate to become a regular release.</p>
+<p>Note: We plan to automate all release tests in the future</p>
 <h3 id="automatic-github-based-release-tests">Automatic (github based) release tests<a class="headerlink" href="#automatic-github-based-release-tests" title="Permanent link">#</a></h3>
-<p>KubeStellar CICD automatically runs a set of e2e tests on each new release. Currently these tests include 2 main test types bash based e2e tests and ginkgo based e2e tests. The bash test basically tests the scenario of  <a href="../example-scenarios/#scenario-1-multi-cluster-workload-deployment-with-kubectl">multi-cluster workload deployment with kubectl</a>. The ginkgo test cover the <a href="../example-scenarios/#scenario-4-singleton-status">Singleton status test</a>, and several other tests that are listed in the test <a href="https://github.com/kubestellar/kubestellar/blob/main/test/e2e/ginkgo/README.md">README</a>. Note, however, that the content of the releases tests may be changed in the future. We will refer to those tests as the <strong>e2e release tests</strong>. 
-The automatic tests are running on github hosted runners of type <strong>Ubuntu latest (currently 22.04) X86 64 bit</strong> 
-Note: When a new release is created please verify that the automatic tests indeed executed and passed. </p>
+<p>KubeStellar CICD automatically runs a set of e2e tests on each new release. Currently these tests include 2 main test types bash based e2e tests and ginkgo based e2e tests. The bash test basically tests the scenario of <a href="../example-scenarios/#scenario-1-multi-cluster-workload-deployment-with-kubectl">multi-cluster workload deployment with kubectl</a>. The ginkgo test cover the <a href="../example-scenarios/#scenario-4-singleton-status">Singleton status test</a>, and several other tests that are listed in the test <a href="https://github.com/kubestellar/kubestellar/blob/main/test/e2e/ginkgo/README.md">README</a>. Note, however, that the content of the releases tests may be changed in the future. We will refer to those tests as the <strong>e2e release tests</strong>.
+The automatic tests are running on github hosted runners of type <strong>Ubuntu latest (currently 22.04) X86 64 bit</strong>
+Note: When a new release is created please verify that the automatic tests indeed executed and passed.</p>
 <h3 id="e2e-release-tests-on-ocp">e2e release tests on OCP<a class="headerlink" href="#e2e-release-tests-on-ocp" title="Permanent link">#</a></h3>
 <p>As many of the KubeStellar customers are using OCP, the release tests should be executed on an OCP cluster as well.<br />
-Currently these tests should be initiated manually on a dedicated OCP cluster that is reserved for the release testing process. </p>
+Currently these tests should be initiated manually on a dedicated OCP cluster that is reserved for the release testing process.</p>
 <p>TODO: The details on how to setup and run the test
-<img alt="" src="../images/construction.png" style="height:100px;width:100px" /></p>
+<figure style="height:100px;width:100px"><img src="../images/construction.png" /><figcaption>"Under Construction"</figcaption></figure>
+</p>
 <h2 id="other-platforms">Other platforms<a class="headerlink" href="#other-platforms" title="Permanent link">#</a></h2>
 <p>KubeStellar is also used on other platforms such as ARM64, MacOS, etc.. Currently these platforms are not part of the routine release testing, however the KubeStellar team will try its best to help and solve issues detected on other platforms as well. Users should go through the regular procedure of opening issues against the KubeStellar <a href="https://github.com/kubestellar/kubestellar/">project</a> .</p>
 
@@ -4306,10 +4309,10 @@ Currently these tests should be initiated manually on a dedicated OCP cluster th
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "navigation.indexes", "navigation.tabs", "navigation.path", "navigation.footer", "navigation.top", "content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "navigation.indexes", "navigation.tabs", "navigation.path", "navigation.footer", "navigation.top", "content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
